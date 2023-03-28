@@ -12,7 +12,6 @@ function getInfosGallery() {
         getFiltres();
         afficheBoutons ();
         loadModalBody(projets);
-        console.log("projet", projets);
     })
     .catch((error) => {
         console.log("error :", error);
@@ -58,7 +57,6 @@ function getFiltres (){
 function loadCategories(infos){
     const id = infos.id;
     const name = infos.name;
-    console.log("infosss", infos);
     infos.forEach(function(category){
         document.querySelector(".filtres").insertAdjacentHTML("beforeend",`<button data-categoryId="${category.id}">${category.name}</button>`);
     });
@@ -69,7 +67,6 @@ function loadCategories(infos){
             const tousFiltrees = projets.filter(function (projet) {
                 return projet.category.id == categoryId || categoryId == 0 ;
             });
-            console.log("tous2:", tousFiltrees);
             loadInfosGallery(tousFiltrees);
         });
     });
@@ -77,7 +74,6 @@ function loadCategories(infos){
 
 const strInfoToken = window.sessionStorage.getItem("dataToken");
 let infoToken = JSON.parse(strInfoToken);
-//console.log(infoToken)
 // Afficher mes boutons modifier//
 function afficheBoutons (){
     if (strInfoToken === null){
@@ -212,7 +208,6 @@ function addGallery (infos){
         const categorieListe = document.createElement("option");
         categorieListe.innerHTML = category.name;
         categorieListe.value = category.id;
-        //`<option value=${category.id} data-categoryId="${category.id}">${category.name}`;
 
         listeElement.appendChild(categorieListe);
     });
@@ -226,8 +221,6 @@ function addGallery (infos){
         chargeUtile.append("title", title.value);
         chargeUtile.append("category", category.value);
         console.log("image element :", chargeUtile);
-        
-        // alert("Veuillez compléter tous les champs!")
 
         fetch("http://localhost:5678/api/works", {
             method: "POST",
@@ -249,7 +242,6 @@ function addGallery (infos){
             document.querySelector(".modal2-content").reset();
             verifieChampsOk();
             showImageForm(false);
-
         })
         .catch((error) => {
             console.log("error :", error);
@@ -268,6 +260,7 @@ function showImageForm(show=true) {
         divImage.classList.remove("hide");
     }
 };
+
 // Verifie que mes champs sont rempli//
 function verifieChampsOk(){
     const inputImage = document.querySelector("[name='imageInput']").files[0];
