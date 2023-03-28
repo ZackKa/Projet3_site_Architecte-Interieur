@@ -17,21 +17,22 @@ function loginUsers() {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log("data: ", data)
+            console.log("data: ", data);
+            redirection(data);
         })
     });
+    
 };
 loginUsers();
 
-/*fetch("http://localhost:5678/api/users/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-        email: "sophie.bluel@test.tld",
-        password: "S0phie"
-    })
-})
-.then((response) => response.json())
-.then((data) => {
-    console.log("tableau: ", data)
-})**/
+function redirection (token) {
+    const valeurToken = JSON.stringify(token);
+    window.sessionStorage.setItem("dataToken", valeurToken);
+    console.log("tok", token);
+
+    if ( token.token ){
+        window.location.href ='index.html';
+    }else{
+        return alert("Erreur dans l’identifiant ou le mot de passe")
+    };
+};
