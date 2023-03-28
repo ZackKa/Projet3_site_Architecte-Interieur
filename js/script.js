@@ -248,7 +248,7 @@ function addGallery (infos){
             // Réinitialisation du formulaire //
             document.querySelector(".modal2-content").reset();
             verifieChampsOk();
-            
+            showImageForm(false);
 
         })
         .catch((error) => {
@@ -259,10 +259,13 @@ function addGallery (infos){
 
 function showImageForm(show=true) {
     const form = document.querySelector(".contenueImg");
+    const divImage = document.getElementById("imgSelect");
     if (!show){
         form.classList.remove("hide");
+        divImage.classList.add("hide");
     }else{
         form.classList.add("hide");
+        divImage.classList.remove("hide");
     }
 };
 // Verifie que mes champs sont rempli//

@@ -490,3 +490,6 @@ input[type="submit"].bouton-valider[disabled]{
     flex-direction: row;
     justify-content: center;
 }
+#imgSelect.hide{
+	display: none;
+}
