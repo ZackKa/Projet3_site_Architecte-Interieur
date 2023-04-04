@@ -30,6 +30,7 @@ function loadInfosGallery(infos) {
         const pieceElement = document.createElement("figure");
 
         const image = document.createElement("img");
+        image.crossOrigin = "Anonymous";
         image.src = imageUrl;
         const nom = document.createElement("figcaption");
         nom.innerHTML = title;
@@ -211,7 +212,6 @@ function addGallery (infos){
 
         listeElement.appendChild(categorieListe);
     });
-    
     const ajoutTravaux = document.querySelector(".modal2-content");
     ajoutTravaux.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -262,10 +262,11 @@ function showImageForm(show=true) {
 };
 
 // Verifie que mes champs sont rempli//
-function verifieChampsOk(){
+function verifieChampsOk(show=true){
     const inputImage = document.querySelector("[name='imageInput']").files[0];
     const inputTitre = document.querySelector("#title").value;
     const inputCategory = document.querySelector("#category").value;
+    
     if (inputImage!== undefined && inputTitre!=="" && inputCategory!==""){
         document.querySelector(".bouton-valider").disabled = false;
     }else{
@@ -282,6 +283,8 @@ function changerBouton(){
         const img = document.querySelector(".imageSelectionnee");
         img.src = URL.createObjectURL(image);
         showImageForm(true);
+        typeFile()
+        verifieImage();
         verifieChampsOk();
         
     });
@@ -298,3 +301,35 @@ function changerBouton(){
     })
 };  
 changerBouton();
+
+function verifieImage(){
+    let fileInput = document.getElementById("image");  
+    if (fileInput.files.length > 0) {
+        const fileSize = fileInput.files.item(0).size;
+        const fileMb = fileSize / 1024 ** 2;
+        //alert(fileMb);
+        if (fileMb > 4) {
+            alert("Veuillez selectionner un autre fichier de 4Mo max.");
+            fileInput.value = "";
+            showImageForm(false);
+        }
+    }
+};
+
+// Sert a verifier le type de fichier//
+function typeFile(){
+    let nomFichier = document.getElementById("image").value;
+    // Sert a trouver l'indice de mon point dans le nom du fichier//
+    const indexPoint = nomFichier.lastIndexOf(".") + 1;
+    // Retourne les caractere entre l'indice et la fin du nom et la met en minuscule//
+    const typeFichier = nomFichier.substr(indexPoint, nomFichier.length).toLowerCase();
+    //Verifie si mon fichier contient jpg ou png apres le point dans le nom//
+    if (typeFichier=="jpg" || typeFichier=="png"){
+
+    }else{
+        alert("Seulement les fichier jpg et png sont accepter!");
+        showImageForm(false);
+        nomFichier = document.getElementById("image");
+        nomFichier.value = "";
+    };   
+};
